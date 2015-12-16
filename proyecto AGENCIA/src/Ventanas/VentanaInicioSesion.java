@@ -21,6 +21,8 @@ import java.awt.FlowLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
@@ -29,7 +31,10 @@ public class VentanaInicioSesion extends JFrame implements ActionListener {
 
 	private JButton btnSalir,btnAceptar,btnRegistrarse;
 	private JPanel contentPane;
-	private JTextField txtDni,txtDni2,txtNombre,txtEdad;;
+	private JTextField txtDni;
+	private static JTextField txtDni2;
+	private JTextField txtNombre;
+	private JTextField txtEdad;;
 	private JLabel lblDni,lblNombre,lblDni2,lblEdad;
 	private JPanel panelCentro, panelSur, panelNorte, panelEste, panelOeste;
 	private JFrame ventanaAnterior;
@@ -42,7 +47,7 @@ public class VentanaInicioSesion extends JFrame implements ActionListener {
 		lblEdad.setVisible(false);
 		lblDni2.setVisible(false);
 		lblNombre.setVisible(false);
-		txtDni2.setVisible(false);
+		getTxtDni2().setVisible(false);
 		txtNombre.setVisible(false);
 		txtEdad.setVisible(false);
 	
@@ -53,7 +58,7 @@ public class VentanaInicioSesion extends JFrame implements ActionListener {
 		lblEdad.setVisible(true);
 		lblDni2.setVisible(true);
 		lblNombre.setVisible(true);
-		txtDni2.setVisible(true);
+		getTxtDni2().setVisible(true);
 		txtNombre.setVisible(true);
 		txtEdad.setVisible(true);
 		
@@ -62,6 +67,7 @@ public class VentanaInicioSesion extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public VentanaInicioSesion(JFrame va) {
+		
 		carrito = new LinkedList();
 		ventanaAnterior=va;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -123,10 +129,10 @@ public class VentanaInicioSesion extends JFrame implements ActionListener {
 		lblDni2.setBounds(326, 324, 46, 14);
 		panelCentro.add(lblDni2);
 		
-		txtDni2 = new JTextField();
-		txtDni2.setBounds(427, 321, 112, 20);
-		panelCentro.add(txtDni2);
-		txtDni2.setColumns(10);
+		setTxtDni2(new JTextField());
+		getTxtDni2().setBounds(427, 321, 112, 20);
+		panelCentro.add(getTxtDni2());
+		getTxtDni2().setColumns(10);
 		
 		lblNombre = new JLabel("NOMBRE");
 		lblNombre.setBounds(326, 401, 46, 14);
@@ -146,8 +152,9 @@ public class VentanaInicioSesion extends JFrame implements ActionListener {
 		panelCentro.add(txtEdad);
 		txtEdad.setColumns(10);
 		ponerInvisible();
-		this.setVisible(true);
 		this.setBounds(160, 100, 1000, 800);
+		
+		this.setVisible(true);
 	}
 
 	@Override
@@ -163,6 +170,7 @@ public class VentanaInicioSesion extends JFrame implements ActionListener {
 			if(d.equals("***")){
 					new VentanaAdministrador(this);
 					txtDni.setText("");
+			        this.dispose();
 			}
 			else{
 				boolean existe = VentanaPrincipal.bd.existeCliente(d);
@@ -180,43 +188,35 @@ public class VentanaInicioSesion extends JFrame implements ActionListener {
 	      		
 		}
 		else if(botonPulsado == btnRegistrarse){
-			if(txtDni2.getText().equals("") || txtNombre.getText().equals("") || txtEdad.getText().equals("")){
+			if(getTxtDni2().getText().equals("") || txtNombre.getText().equals("") || txtEdad.getText().equals("")){
 				JOptionPane.showMessageDialog(null, "ERROR! Falta por rellenar algún campo", "ERROR", JOptionPane.ERROR_MESSAGE);
 	
 			}
-			else if (!txtDni.getText().equals(txtDni2.getText())){
+			else if (!txtDni.getText().equals(getTxtDni2().getText())){
 				JOptionPane.showMessageDialog(null, "ERROR! El dni no es correcto", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 			else{
-				String d = txtDni2.getText();
+				String d = getTxtDni2().getText();
 				String n = txtNombre.getText();	
 				int ed = Integer.parseInt(txtEdad.getText());
 				VentanaPrincipal.bd.insertarCliente(d, n);
 				JOptionPane.showMessageDialog(null, "Registro completado con exito", "REGISTRADO", JOptionPane.INFORMATION_MESSAGE);
-				txtDni2.setText("");
+				getTxtDni2().setText("");
 				txtNombre.setText("");
 				txtEdad.setText("");
 				ponerInvisible();
 			}
+		
 		}
-			
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 	}
+
+	public static JTextField getTxtDni2() {
+		return txtDni2;
+	}
+
+	public void setTxtDni2(JTextField txtDni2) {
+		this.txtDni2 = txtDni2;
+	}
+	
 }

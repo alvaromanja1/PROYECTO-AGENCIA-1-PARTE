@@ -24,7 +24,7 @@ public class BD {
 	{
 		try {
 			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:Agencia.db");
+			connection = DriverManager.getConnection("jdbc:sqlite:Agencia1.db");
 			crearSentencia();
 		}catch(Exception e)
 		{
@@ -115,6 +115,23 @@ public class BD {
 		return resul;
 	}
 	
+	public boolean existeVehiculos(String color,String marca,String modelo,float precio,String matricula,String foto){
+		String s = "SELECT * FROM vehiculo WHERE color='"+color+"' AND marca='"+marca+"' AND modelo='"+modelo+"' AND precio="+precio+" AND matricula='"+matricula+"' AND foto='"+foto+"'" ;
+		ResultSet rs;
+		boolean resul=false;
+		try {
+			rs = stmt.executeQuery(s);
+			if(rs.next())
+				resul=true;
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return resul;
+	}
 
 	public Cliente obtenerCliente(String d){
 		Cliente c = null;
@@ -202,6 +219,7 @@ public class BD {
 		return c;
 	}
 	
+	
 	public boolean existeVehiculo(String matricula){
 		boolean existe=false;
 		String s = "SELECT * FROM vehiculo WHERE matricula='"+matricula+"'";
@@ -218,9 +236,9 @@ public class BD {
 		return existe;
 	}
 	
-	public void insertarVehiculo(int matricula, String modelo, String marca, String color, double precio, String foto ){
+	public void insertarVehiculo(String color, String marca, String modelo,float precio, String matricula,String foto ){
 		
-		String s = "INSERT INTO vehiculo(matricula,modelo,marca,color,precio,foto) VALUES('"+matricula+"','"+modelo+"',"+marca+",'"+color+"','"+precio+"','"+foto+"')";
+		String s = "INSERT INTO vehiculo(matricula,modelo,marca,color,precio,foto) VALUES('"+matricula+"','"+modelo+"','"+marca+"','"+color+"',"+precio+",'"+foto+"')";
 		
 		try {
 			stmt.executeUpdate(s);
@@ -249,7 +267,7 @@ public class BD {
 		Vehiculo l = null;
 		try {
 			rs = stmt.executeQuery(s);
-			l = new Vehiculo(rs.getString("marca"),rs.getString("modelo"),rs.getString("color"),rs.getDouble("precio"),rs.getString("matricula"),rs.getString("foto"));
+			l = new Vehiculo(rs.getString("marca"),rs.getString("modelo"),rs.getString("color"),rs.getFloat("precio"),rs.getString("matricula"),rs.getString("foto"));
 					
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -319,6 +337,40 @@ public class BD {
 		}
 	}
 	
+	public LinkedList<String> obtenerMarcas(){
+		String s= "SELECT DISTINCT(marca) FROM vehiculo";
+		LinkedList<String> marcas = new LinkedList<String>();
+		try {
+			ResultSet rs = stmt.executeQuery(s);
+			while(rs.next()){
+				String m = rs.getString("marca");
+				marcas.add(m);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return marcas;
+	}
+	public LinkedList<String> obtenerModelos(String marca){
+		String s= "SELECT DISTINCT(modelo) FROM vehiculo WHERE marca='"+marca+"'";
+		LinkedList<String> modelos = new LinkedList<String>();
+		try {
+			ResultSet rs = stmt.executeQuery(s);
+			while(rs.next()){
+				String m = rs.getString("modelo");
+				modelos.add(m);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return modelos;
+	}
+	
+
 	
 	
 	

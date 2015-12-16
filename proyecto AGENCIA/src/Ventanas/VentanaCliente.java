@@ -1,7 +1,6 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
-
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
@@ -19,9 +19,11 @@ import TipoDeDatos.Cliente;
 
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+
 import java.awt.Color;
 import java.awt.Font;
 
+import TipoDeDatos.Viajes;
 public class VentanaCliente extends JFrame implements ActionListener {
 
 
@@ -115,8 +117,8 @@ public class VentanaCliente extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		JButton botonPulsado = (JButton)e.getSource();
 		if(botonPulsado ==btnVolver){
-			this.dispose();
-			ventanaAnterior.setVisible(true);
+		this.dispose();
+		ventanaAnterior.setVisible(true);
 			
 	}else if(botonPulsado == btnVerCarrito){
 		this.dispose();
@@ -128,11 +130,17 @@ public class VentanaCliente extends JFrame implements ActionListener {
 	
 	}else if(botonPulsado == btnComprarCoche){
 		this.dispose();
-		//new VentanaFotosCoches(this,marca,modelo);
+		String marca = JOptionPane.showInputDialog("Selecciona la marca: (ferrari, reanult, honda (Moto)" /*+m*/);
+		String modelo = JOptionPane.showInputDialog("Selecciona la modelo: (enzo, laguna, cbr");
+		new VentanaFotosCoches(this,marca,modelo);
 	}else if(botonPulsado == btnComprarViaje){
 		this.dispose();
-		//new VentanaFotosViaje(ventanaAnterior, foto);
-	
+		String d = VentanaInicioSesion.getTxtDni2().getText();
+		new VentanaFotosViaje(this, d);
+		/*this.dispose();
+		new VentanaFotosViaje(this,d);
+		this.setVisible(false);
+		*/
 	}
 		
 	}

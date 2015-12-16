@@ -13,10 +13,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 
 import TipoDeDatos.Cliente;
+import TipoDeDatos.Vehiculo;
 
 public class VentanaDeseaComprarCoche extends JFrame implements ActionListener{
 
@@ -77,8 +79,24 @@ public class VentanaDeseaComprarCoche extends JFrame implements ActionListener{
 	}
 		else if (botonPulsado==btnSi){
 			this.setVisible(false);
-			String marca = JOptionPane.showInputDialog("Selecciona la marca: (ferrari, reanult, honda (Moto)");
-			String modelo = JOptionPane.showInputDialog("Selecciona la modelo: (enzo, laguna, cbr");
+		// que se vea la marca insertada por el administrador tambien
+			LinkedList<String> marcas = VentanaPrincipal.bd.obtenerMarcas();
+			
+			String s="Selecciona la marca: (";
+			int i;
+			for(i=0;i<marcas.size()-1;i++){
+				s=s+" " + marcas.get(i)+",";
+			}
+			s= s + marcas.get(i)+" )";
+			String marca = JOptionPane.showInputDialog(s);
+			LinkedList<String> modelos = VentanaPrincipal.bd.obtenerModelos(marca);
+			s="Selecciona el modelo: (";
+			for(i=0;i<modelos.size()-1;i++){
+				s=s+" " + modelos.get(i)+ ",";
+			}
+			s= s + modelos.get(i)+" )";
+			
+			String modelo = JOptionPane.showInputDialog(s);
 			new VentanaFotosCoches(this,marca,modelo);
 		}
 		else if(botonPulsado==btnNo){

@@ -14,7 +14,7 @@ import Utilidades.Utilidades;
 public class Vehiculo implements Serializable{
    
 	
-	protected double precio;
+	protected float precio;
 	protected String color;
 	protected String modelo;
 	protected String marca;
@@ -29,7 +29,7 @@ public class Vehiculo implements Serializable{
 	 * @param m	modelo del vehiculo
 	 * @param M	Marca del vehículo
 	 */
-	public Vehiculo(String M,String m,String c, double d, String i, String rf){
+	public Vehiculo(String M,String m,String c, float d, String i, String rf){
 		
 		precio=d;
 		color=c;
@@ -46,9 +46,7 @@ public class Vehiculo implements Serializable{
 	public void setRutaFoto(String rutaFoto) {
 		this.rutaFoto = rutaFoto;
 	}
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
+	
 	/** Devuelve el precio del coche
 	 * @return	precio del coche
 	 */
@@ -115,10 +113,9 @@ public class Vehiculo implements Serializable{
 
 	
 	/** Metodo desde el cual se leerán los datos insertados por el usuario
-	 */
-	public  void leer(){
+	 */public  void leer(){
 		System.out.println("Inserta el precio que desee gastarse: ");
-		precio=Utilidades.leerReal();
+		precio=(float) Utilidades.leerReal();
 		
 		System.out.println("¿Qué marca de vehículo desea?");
 		marca=Utilidades.leerCadena();
@@ -130,6 +127,7 @@ public class Vehiculo implements Serializable{
 		modelo=Utilidades.leerCadena();
 		
 	}
+	
 	/** Metodo desde el cual se mostrarán los datos insertados por el usuario
 	 */
 	public void mostrar(){

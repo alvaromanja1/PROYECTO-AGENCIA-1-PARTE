@@ -52,6 +52,7 @@ public class VentanaCarritoViajes extends JFrame implements ActionListener, Mous
 	 * Create the frame.
 	 */
 	public VentanaCarritoViajes(JFrame va) {
+		ventanaAnterior=va;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 741, 300);
 		contentPane = new JPanel();

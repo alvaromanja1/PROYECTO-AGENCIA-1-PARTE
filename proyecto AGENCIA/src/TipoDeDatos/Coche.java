@@ -31,7 +31,7 @@ public class Coche extends Vehiculo implements Comparable ,Vendible {
 	 * @param n	numero de puertas del vehiculo
 	 */
 	
-	public Coche(String M, String m, String c, double d,  String mat, int a, int n,String rf){
+	public Coche(String M, String m, String c, float d,  String mat, int a, int n,String rf){
 		super(M,m,c,d,mat,rf);
 		año=a;
 		numPuertas=n;

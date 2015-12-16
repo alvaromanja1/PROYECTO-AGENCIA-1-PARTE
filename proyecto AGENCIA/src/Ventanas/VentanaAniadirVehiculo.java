@@ -2,15 +2,22 @@ package Ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class VentanaAniadirVehiculo extends JFrame {
+import TipoDeDatos.Vehiculo;
+import TipoDeDatos.Viajes;
+
+public class VentanaAniadirVehiculo extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField txtMarca;
@@ -20,6 +27,11 @@ public class VentanaAniadirVehiculo extends JFrame {
 	private JTextField txtMatricula;
 	private JTextField txtRuta;
     private JFrame ventanaAnterior;
+    private JButton btnVolver,btnAniadirCoche;
+    private String Marca;
+    private LinkedList<Vehiculo> Marcas;
+    
+    
 	
 	/**
 	 * Create the frame.
@@ -43,11 +55,13 @@ public class VentanaAniadirVehiculo extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.SOUTH);
 		
-		JButton btnVolver = new JButton("VOLVER");
+		btnVolver = new JButton("VOLVER");
 		panel_1.add(btnVolver);
+		btnVolver.addActionListener(this);
 		
-		JButton btnAniadirCoche = new JButton("A\u00D1ADIR COCHE");
+		btnAniadirCoche = new JButton("A\u00D1ADIR COCHE");
 		panel_1.add(btnAniadirCoche);
+		btnAniadirCoche.addActionListener(this);
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.CENTER);
@@ -108,4 +122,61 @@ public class VentanaAniadirVehiculo extends JFrame {
 		txtRuta.setColumns(10);
 	    this.setVisible(true);
 	}
+
+	 private void limpiarCampos(){
+			
+			txtMarca.setText("");
+			txtModelo.setText("");
+			txtColor.setText("");
+			txtPrecio.setText("");
+			txtMatricula.setText("");
+			txtRuta.setText("");
+			
+		 }
+	 
+		private boolean comprabarCamposRellenos(){
+			if(txtMarca.equals("") || txtModelo.equals("") || txtColor.equals("") || txtMatricula.equals("") || txtPrecio.equals("") || txtRuta.equals(""))
+				return false;
+			else
+				return true;
+		}
+	
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			JButton botonPulsado = (JButton) e.getSource();
+			if(botonPulsado == btnVolver){
+				this.dispose();
+				ventanaAnterior.setVisible(true);
+			}
+			
+			
+			else if(botonPulsado == btnAniadirCoche){
+				if(!comprabarCamposRellenos())
+					JOptionPane.showMessageDialog(null, "ERROR! Falta algún campo por rellenar", "ERROR", JOptionPane.ERROR_MESSAGE);
+				else{
+					String color = txtColor.getText();
+					Marca = txtMarca.getText();
+					String modelo = txtModelo.getText();
+					float precio=Float.parseFloat(txtPrecio.getText());
+					String matricula= txtMatricula.getText();
+					String foto=txtRuta.getText();
+					
+					
+					
+					boolean existe = VentanaPrincipal.bd.existeVehiculos(color, Marca, modelo, precio, matricula, foto);
+					if(existe){
+						JOptionPane.showMessageDialog(null, "ERROR! Vehiculo repetido", "ERROR", JOptionPane.ERROR_MESSAGE);
+						limpiarCampos();
+					}
+					else{
+						VentanaPrincipal.bd.insertarVehiculo(color,Marca,modelo,precio,matricula,foto);
+						JOptionPane.showMessageDialog(null, "Vehiculo añadido correctamente", "CORRECTO", JOptionPane.INFORMATION_MESSAGE);
+						limpiarCampos();
+					}
+				}
+			}
+			
+			
+		}
 }
+

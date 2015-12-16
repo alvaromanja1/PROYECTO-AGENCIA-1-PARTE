@@ -1,9 +1,8 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
-import java.awt.Point;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -12,12 +11,10 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -25,7 +22,6 @@ import javax.swing.JLabel;
 
 import BD.BD;
 import Threads.MiThread;
-import TipoDeDatos.Coche;
 //import java.applet.AudioClip;
 
 public class VentanaPrincipal extends JFrame implements ActionListener,MouseListener{
@@ -41,6 +37,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener,MouseList
 	private Thread t;
 	private JButton btnLLamar;
 	private LinkedList<String> rutasIzda, rutasDcha;
+	private JFrame ventanaAnterior;
+	
 	//AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Sonidos/llamadatelefono.mp3"));
 	
 	
@@ -49,7 +47,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener,MouseList
 	/**
 	 * Launch the application.
 	 */
-	
+	/*
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -63,9 +61,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener,MouseList
 			}
 		});
 	}
-	
+	*/
 	public void cargarFotos()
 	{
+		
 		panelFotos.removeAll();
 		aRutasViajes=bd.obtenerRutasFotos();
 		for(int j=0;j<aRutasViajes.size();j++)
@@ -185,11 +184,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener,MouseList
 	/**
 	 * Create the frame.
 	 */
-	public VentanaPrincipal() {
+	public VentanaPrincipal(JFrame va) {
 	
 		bd = new BD();
 		
-		
+		ventanaAnterior=va;
 		rutasIzda = new LinkedList<String>();
 		rutasDcha = new LinkedList<String>();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -224,6 +223,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener,MouseList
 		btnSalir = new JButton("SALIR");
 		panel_1.add(btnSalir);
 		btnSalir.addActionListener(this);
+	
+		
 		
 		panelIzdo = new JPanel();
 		contentPane.add(panelIzdo, BorderLayout.WEST);
@@ -234,8 +235,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener,MouseList
 		
 		
 		panelFotos = new JPanel();
-		scrollFotos = new JScrollPane(panelFotos);
-		panelFotos.setLayout(new GridLayout(0, 3, 0, 0));
+		scrollFotos = new JScrollPane(panelFotos,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		panelFotos.setLayout(new GridLayout(3, 2, 0, 0));
 		scrollFotos.addMouseListener(this);
 		cargarFotos();
 		contentPane.add(scrollFotos, BorderLayout.CENTER);
@@ -269,7 +270,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener,MouseList
 		// TODO Auto-generated method stub
 		JButton botonPulsado =(JButton)e.getSource();
 		if(botonPulsado==btnSalir){
-			System.exit(0);
+			new VentanaVideo2();
+			//System.exit(0);
 	}
 		else if(botonPulsado==btnIniciarSesion){
 			this.dispose();

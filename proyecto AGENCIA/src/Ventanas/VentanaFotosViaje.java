@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 
+
 import TipoDeDatos.Coche;
 import TipoDeDatos.Viajes;
 
@@ -33,7 +34,6 @@ public class VentanaFotosViaje extends JFrame implements ActionListener, MouseLi
 		private JButton btnVolver;
 		private JLabel lblViajesDisponibles;
 		public static LinkedList<String> aRutasViajes;
-		private JButton btnVerVideos;
 		
 		/**
 		 * Método que carga las fotos. Recorre el array de rutas y lo inserta en una jLabel. Este a su vez se introducira en un 
@@ -76,17 +76,14 @@ public class VentanaFotosViaje extends JFrame implements ActionListener, MouseLi
 			JPanel panel_1 = new JPanel();
 			contentPane.add(panel_1, BorderLayout.SOUTH);
 			
-			btnVerVideos = new JButton("VER V\u00CDDEOS");
-			panel_1.add(btnVerVideos);
-			
 			btnVolver = new JButton("VOLVER");
 			panel_1.add(btnVolver);
 			btnVolver.addActionListener(this);
 			
 			
 			panelFotos = new JPanel();
-			panelFotos.setLayout(new GridLayout(0, 5, 0, 0));
-			scrollFotos = new JScrollPane(panelFotos);
+			panelFotos.setLayout(new GridLayout(2, 5, 0, 0));
+			scrollFotos = new JScrollPane(panelFotos,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			scrollFotos.addMouseListener(this);
 			panelFotos.addMouseListener(this);
 			cargarFotos();
@@ -106,10 +103,7 @@ public class VentanaFotosViaje extends JFrame implements ActionListener, MouseLi
 				ventanaAnterior.setVisible(true);
 				
 			}
-			else if (botonPulsado==btnVerVideos){
-				this.dispose();
-				new VentanaVideos(this);
-			}
+			
 		
 		}
 

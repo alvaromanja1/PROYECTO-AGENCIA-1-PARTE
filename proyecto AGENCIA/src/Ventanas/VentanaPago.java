@@ -1,9 +1,13 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,8 +33,8 @@ public class VentanaPago extends JFrame implements ActionListener{
 		private JFrame ventanaAnterior;
 		private JLabel lblNombre,lblApellido,lblCorreoElectrnico,lblFechaDeNacimiento,lblDireccinh,lblTelfono,lblNmeroDeTarjeta ;
 		private JButton btnFinalizarCompra;
-		private JCheckBox chckbxContrareembolso,chckbxTarjetaDeCrdito;
-
+		//private JCheckBox chckbxContrareembolso,chckbxTarjetaDeCrdito;
+		private Checkbox chckbxContrareembolso,chckbxTarjetaDeCrdito;
 		
 		public VentanaPago(JFrame va) {
 			ventanaAnterior=va;
@@ -66,13 +70,81 @@ public class VentanaPago extends JFrame implements ActionListener{
 			lblTelfono.setBounds(10, 147, 180, 14);
 			contentPane.add(lblTelfono);
 			
-			chckbxContrareembolso = new JCheckBox("Contrareembolso");
+			CheckboxGroup cbg = new CheckboxGroup();
+			chckbxContrareembolso=new Checkbox("Contrareembolso", cbg, true);
+			chckbxContrareembolso.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					lblNmeroDeTarjeta.setVisible(false);
+					txtTarjeta.setVisible(false);
+				}
+			});
 			chckbxContrareembolso.setBounds(34, 168, 180, 23);
+			chckbxTarjetaDeCrdito = new Checkbox("Tarjeta de Cr\u00E9dito",cbg,false);
+			chckbxTarjetaDeCrdito.setBounds(222, 168, 180, 23);
+			chckbxTarjetaDeCrdito.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					lblNmeroDeTarjeta.setVisible(true);
+					txtTarjeta.setVisible(true);
+				}
+			});
+			add(chckbxContrareembolso);
+			add(chckbxTarjetaDeCrdito);
 			contentPane.add(chckbxContrareembolso);
 			
-			chckbxTarjetaDeCrdito = new JCheckBox("Tarjeta de Cr\u00E9dito");
-			chckbxTarjetaDeCrdito.setBounds(222, 168, 180, 23);
-			contentPane.add(chckbxTarjetaDeCrdito);
 			
 			lblNmeroDeTarjeta = new JLabel("N\u00FAmero de tarjeta de cr\u00E9dito");
 			lblNmeroDeTarjeta.setBounds(10, 198, 180, 14);
@@ -117,13 +189,7 @@ public class VentanaPago extends JFrame implements ActionListener{
 			contentPane.add(txtTarjeta);
 			txtTarjeta.setColumns(10);
 			txtTarjeta.setVisible(false);
-			
-			if (chckbxTarjetaDeCrdito.isSelected())
-				lblNmeroDeTarjeta.setVisible(true);
-			
-			if (chckbxTarjetaDeCrdito.isSelected())
-				txtTarjeta.setVisible(true);
-			
+
 			btnFinalizarCompra = new JButton("FINALIZAR COMPRA");
 			btnFinalizarCompra.setBounds(206, 223, 166, 23);
 			contentPane.add(btnFinalizarCompra);

@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import TipoDeDatos.Coche;
@@ -134,6 +135,9 @@ public class VentanaDatosCoche extends JFrame implements ActionListener{
 			
 	}
 		else if (botonPulsado==btnComprar){
+			Vehiculo v = VentanaPrincipal.bd.obtenerVehiculo(ruta);
+			VentanaInicioSesion.carrito.add(v);
+			JOptionPane.showMessageDialog(null, "Se ha añadido el coche al carrito", "COMPRA REALIZADA CON ÉXITO", JOptionPane.INFORMATION_MESSAGE);
 			this.setVisible(false);	
 			new VentanaCliente(ventanaAnterior);
 		}

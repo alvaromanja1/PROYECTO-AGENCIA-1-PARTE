@@ -27,7 +27,7 @@ public Moto(){
  * @param ci cilindrada de la moto
 
  */
-public Moto(String M, String m, String c, double d, String mat,int a,int ci, int T, String rf){
+public Moto(String M, String m, String c, float d, String mat,int a,int ci, int T, String rf){
 	super(M,m,c,d,mat,rf);
 	año=a;
 	numTubosEscape=T;

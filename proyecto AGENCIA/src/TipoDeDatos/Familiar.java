@@ -21,7 +21,7 @@ public class Familiar extends Coche{
 	 * @param K	Parachoques (SI O NO)
 	 */
 	  
-	public Familiar (String M, String m, String c, double d,  String mat,int a, int n,  int P, char K, String rf){
+	public Familiar (String M, String m, String c, float d,  String mat,int a, int n,  int P, char K, String rf){
 		super(M, m, c, d, mat, a, n,rf); 
 		plazas=P;
 		parachoques=K;
